@@ -1,0 +1,171 @@
+# Default values for aws-load-balancer-controller.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: ${replicas}
+
+image:
+  repository: ${image_repository}
+  tag: ${image_tag}
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: "${name_override}"
+fullnameOverride: "${fullname_override}"
+
+# The name of the Kubernetes cluster. A non-empty value is required
+clusterName: ${cluster_name}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: ${service_account_annotations}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ${service_account_name}
+
+rbac:
+  # Specifies whether rbac resources should be created
+  create: true
+
+podSecurityContext: ${pod_security_context}
+  # fsGroup: 65534
+
+securityContext: ${security_context}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # allowPrivilegeEscalation: false
+
+# Time period for the controller pod to do a graceful shutdown
+terminationGracePeriodSeconds: ${termination_grace_period_seconds}
+
+resources: ${resources}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Leverage a PriorityClass to ensure the controller will survive resource shortages
+# ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: ${priority_class_name}
+
+nodeSelector: {}
+
+tolerations: ${tolerations}
+
+affinity: ${affinity}
+
+podAnnotations: ${pod_annotations}
+
+podLabels: ${pod_labels}
+
+# Enable cert-manager
+enableCertManager: ${enable_cert_manager}
+
+# The ingress class this controller will satisfy. If not specified, controller will match all
+# ingresses without ingress class annotation and ingresses of type alb
+ingressClass: ${ingress_class}
+
+# The AWS region for the kubernetes cluster. Set to use KIAM or kube2iam for example.
+region: ${region}
+
+# The VPC ID for the Kubernetes cluster. Set this manually when your pods are unable to use the metadata service to determine this automatically
+vpcId: ${vpc_id}
+
+# Maximum retries for AWS APIs (default 10)
+awsMaxRetries: ${aws_max_retries}
+
+# If enabled, targetHealth readiness gate will get injected to the pod spec for the matching endpoint pods (default true)
+enablePodReadinessGateInject: ${enable_pod_readiness_gate_inject}
+
+# Enable Shield addon for ALB (default true)
+enableShield: ${enable_shield}
+
+# Enable WAF addon for ALB (default true)
+enableWaf: ${enable_waf}
+
+# Enable WAF V2 addon for ALB (default true)
+enableWafv2: ${enable_wafv2}
+
+# Maximum number of concurrently running reconcile loops for ingress (default 3)
+ingressMaxConcurrentReconciles: ${ingress_max_concurrent_reconciles}
+
+# Set the controller log level - info(default), debug (default "info")
+logLevel: ${log_level}
+
+# The address the metric endpoint binds to. (default ":8080")
+metricsBindAddr: ${metrics_bind_addr}
+
+# The TCP port the Webhook server binds to. (default 9443)
+webhookBindPort: ${webhook_bind_port}
+
+# Maximum number of concurrently running reconcile loops for service (default 3)
+serviceMaxConcurrentReconciles: ${service_max_concurrent_reconciles}
+
+# Maximum number of concurrently running reconcile loops for targetGroupBinding
+targetgroupbindingMaxConcurrentReconciles: ${targetgroupbinding_max_concurrent_reconciles}
+
+# Period at which the controller forces the repopulation of its local object stores. (default 1h0m0s)
+syncPeriod: ${sync_period}
+
+# Namespace the controller watches for updates to Kubernetes objects, If empty, all namespaces are watched.
+watchNamespace: ${watch_namespace}
+
+# Liveness probe configuration for the controller
+livenessProbe:
+  failureThreshold: 2
+  httpGet:
+    path: /healthz
+    port: 61779
+    scheme: HTTP
+  initialDelaySeconds: 30
+  timeoutSeconds: 10
+
+# Environment variables to set for aws-load-balancer-controller pod.
+# We strongly discourage programming access credentials in the controller environment. You should setup IRSA or
+# comparable solutions like kube2iam, kiam etc instead.
+env: ${env}
+  # ENV_1: ""
+  # ENV_2: ""
+
+# Specifies if aws-load-balancer-controller should be started in hostNetwork mode.
+#
+# This is required if using a custom CNI where the managed control plane nodes are unable to initiate
+# network connections to the pods, for example using Calico CNI plugin on EKS. This is not required or
+# recommended if using the Amazon VPC CNI plugin.
+hostNetwork: ${host_network}
+
+# extraVolumeMounts are the additional volume mounts. This enables setting up IRSA on non-EKS Kubernetes cluster
+extraVolumeMounts: ${extra_volume_mounts}
+  # - name: aws-iam-token
+  #   mountPath: /var/run/secrets/eks.amazonaws.com/serviceaccount
+  #   readOnly: true
+
+# extraVolumes for the extraVolumeMounts. Useful to mount a projected service account token for example.
+extraVolumes: ${extra_volumes}
+  # - name: aws-iam-token
+  #   projected:
+  #     defaultMode: 420
+  #     sources:
+  #     - serviceAccountToken:
+  #         audience: sts.amazonaws.com
+  #         expirationSeconds: 86400
+  #         path: token
+
+# defaultTags are the tags to apply to all AWS resources managed by this controller
+defaultTags: ${default_tags}
+  # default_tag1: value1
+  # default_tag2: value2
+
+podDisruptionBudget: ${pdb}
+#  maxUnavailable: 1
