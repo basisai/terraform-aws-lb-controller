@@ -6,31 +6,37 @@ variable "release_name" {
 
 variable "chart_name" {
   description = "Helm chart name to provision"
+  type        = string
   default     = "aws-load-balancer-controller"
 }
 
 variable "chart_repository" {
   description = "Helm repository for the chart"
+  type        = string
   default     = "https://aws.github.io/eks-charts"
 }
 
 variable "chart_version" {
   description = "Version of Chart to install. Set to empty to install the latest version"
+  type        = string
   default     = "1.1.6"
 }
 
 variable "chart_namespace" {
   description = "Namespace to install the chart into"
+  type        = string
   default     = "kube-system"
 }
 
 variable "chart_timeout" {
   description = "Timeout to wait for the Chart to be deployed."
+  type        = number
   default     = 300
 }
 
 variable "max_history" {
   description = "Max History for Helm"
+  type        = number
   default     = 20
 }
 
@@ -186,8 +192,8 @@ variable "enable_cert_manager" {
 
 ########################
 # Controller Settings
+########################
 variable "cluster_name" {
-  ########################
   description = "Name of Kubernetes Cluster"
   type        = string
 }
