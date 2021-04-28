@@ -4,6 +4,8 @@ set -xeuo pipefail
 main() {
     cd "$@"
 
+    export AWS_REGION=dummy
+
     terraform init -backend=false
     terraform validate
     tflint
