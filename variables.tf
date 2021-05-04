@@ -50,9 +50,15 @@ variable "replicas" {
 }
 
 variable "image_repository" {
-  description = "Image repository"
+  description = "Image repository on Dockerhub"
   type        = string
   default     = "amazon/aws-alb-ingress-controller"
+}
+
+variable "prefer_ecr_repositories" {
+  description = "Prefer ECR repositories according to the region. If none can be found, `var.image_repository` is used"
+  type        = bool
+  default     = true
 }
 
 variable "image_tag" {
