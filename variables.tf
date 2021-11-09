@@ -19,7 +19,7 @@ variable "chart_repository" {
 variable "chart_version" {
   description = "Version of Chart to install. Set to empty to install the latest version"
   type        = string
-  default     = "1.1.6"
+  default     = "1.3.2"
 }
 
 variable "chart_namespace" {
@@ -64,7 +64,7 @@ variable "prefer_ecr_repositories" {
 variable "image_tag" {
   description = "Image tag"
   type        = string
-  default     = "v2.1.3"
+  default     = "v2.3.0"
 }
 
 variable "name_override" {
@@ -342,4 +342,10 @@ variable "iam_role_tags" {
   description = "Tags for IAM Role for controller"
   type        = map(string)
   default     = {}
+}
+
+variable "iam_role_policy" {
+  description = "Override the IAM policy for the controller"
+  type        = string
+  default     = ""
 }
