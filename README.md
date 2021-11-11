@@ -11,6 +11,7 @@ to a Kubernetes Cluster.
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.28 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2 |
+| <a name="requirement_http"></a> [http](#requirement\_http) | >= 2.1 |
 
 ## Providers
 
@@ -18,6 +19,7 @@ to a Kubernetes Cluster.
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.28 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2 |
+| <a name="provider_http"></a> [http](#provider\_http) | >= 2.1 |
 
 ## Modules
 
@@ -32,6 +34,7 @@ to a Kubernetes Cluster.
 | [aws_iam_role_policy.controller](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [helm_release.release](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
+| [http_http.iam_policy](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 
 ## Inputs
 
@@ -43,7 +46,7 @@ to a Kubernetes Cluster.
 | <a name="input_chart_namespace"></a> [chart\_namespace](#input\_chart\_namespace) | Namespace to install the chart into | `string` | `"kube-system"` | no |
 | <a name="input_chart_repository"></a> [chart\_repository](#input\_chart\_repository) | Helm repository for the chart | `string` | `"https://aws.github.io/eks-charts"` | no |
 | <a name="input_chart_timeout"></a> [chart\_timeout](#input\_chart\_timeout) | Timeout to wait for the Chart to be deployed. | `number` | `300` | no |
-| <a name="input_chart_version"></a> [chart\_version](#input\_chart\_version) | Version of Chart to install. Set to empty to install the latest version | `string` | `"1.1.6"` | no |
+| <a name="input_chart_version"></a> [chart\_version](#input\_chart\_version) | Version of Chart to install. Set to empty to install the latest version | `string` | `"1.3.2"` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of Kubernetes Cluster | `string` | n/a | yes |
 | <a name="input_cluster_oidc_issuer_url"></a> [cluster\_oidc\_issuer\_url](#input\_cluster\_oidc\_issuer\_url) | OIDC provider URL for EKS cluster | `string` | n/a | yes |
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | Default tags to apply to all AWS resources managed by this controller | `map(string)` | `{}` | no |
@@ -61,9 +64,10 @@ to a Kubernetes Cluster.
 | <a name="input_iam_role_name"></a> [iam\_role\_name](#input\_iam\_role\_name) | Name of IAM role for controller | `string` | `"aws-load-balancer-controller"` | no |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | IAM Role path for controller | `string` | `""` | no |
 | <a name="input_iam_role_permission_boundary"></a> [iam\_role\_permission\_boundary](#input\_iam\_role\_permission\_boundary) | Permission boundary ARN for IAM Role for controller | `string` | `""` | no |
+| <a name="input_iam_role_policy"></a> [iam\_role\_policy](#input\_iam\_role\_policy) | Override the IAM policy for the controller | `string` | `""` | no |
 | <a name="input_iam_role_tags"></a> [iam\_role\_tags](#input\_iam\_role\_tags) | Tags for IAM Role for controller | `map(string)` | `{}` | no |
 | <a name="input_image_repository"></a> [image\_repository](#input\_image\_repository) | Image repository on Dockerhub | `string` | `"amazon/aws-alb-ingress-controller"` | no |
-| <a name="input_image_tag"></a> [image\_tag](#input\_image\_tag) | Image tag | `string` | `"v2.1.3"` | no |
+| <a name="input_image_tag"></a> [image\_tag](#input\_image\_tag) | Image tag | `string` | `"v2.3.0"` | no |
 | <a name="input_ingress_class"></a> [ingress\_class](#input\_ingress\_class) | The ingress class this controller will satisfy. If not specified, controller will match all ingresses without ingress class annotation and ingresses of type alb | `string` | `"alb"` | no |
 | <a name="input_ingress_max_concurrent_reconciles"></a> [ingress\_max\_concurrent\_reconciles](#input\_ingress\_max\_concurrent\_reconciles) | Maximum number of concurrently running reconcile loops for ingress (default 3) | `number` | `3` | no |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Log level. Either `info` or `debug` | `string` | `"info"` | no |
