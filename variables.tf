@@ -309,8 +309,8 @@ variable "default_tags" {
 ########################
 # IAM Role
 ########################
-variable "cluster_oidc_issuer_url" {
-  description = "OIDC provider URL for EKS cluster"
+variable "oidc_provider_arn" {
+  description = "OIDC Provider ARN for IRSA"
   type        = string
 }
 
