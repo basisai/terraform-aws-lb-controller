@@ -317,7 +317,7 @@ variable "oidc_provider_arn" {
 variable "iam_role_name" {
   description = "Name of IAM role for controller"
   type        = string
-  default     = "aws-load-balancer-controller"
+  default     = ""
 }
 
 variable "iam_role_description" {
