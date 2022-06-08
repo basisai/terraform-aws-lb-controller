@@ -309,15 +309,15 @@ variable "default_tags" {
 ########################
 # IAM Role
 ########################
-variable "cluster_oidc_issuer_url" {
-  description = "OIDC provider URL for EKS cluster"
+variable "oidc_provider_arn" {
+  description = "OIDC Provider ARN for IRSA"
   type        = string
 }
 
 variable "iam_role_name" {
   description = "Name of IAM role for controller"
   type        = string
-  default     = "aws-load-balancer-controller"
+  default     = ""
 }
 
 variable "iam_role_description" {

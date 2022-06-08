@@ -16,7 +16,7 @@ locals {
     service_account_name = var.service_account_name
     service_account_annotations = jsonencode(merge(
       {
-        "eks.amazonaws.com/role-arn" = module.iam_assumable_role_admin.iam_role_arn
+        "eks.amazonaws.com/role-arn" = module.lb_controller_role.iam_role_arn
       },
       var.service_account_annotations,
     ))
