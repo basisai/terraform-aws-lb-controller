@@ -16,6 +16,8 @@ fullnameOverride: "${fullname_override}"
 # The name of the Kubernetes cluster. A non-empty value is required
 clusterName: ${cluster_name}
 
+SubnetsClusterTagCheck: ${cluster_tag_check}
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

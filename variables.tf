@@ -204,6 +204,12 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "cluster_tag_check" {
+  description = "Enable or disable subnet tag check"
+  type        = bool
+  default     = false
+}
+
 variable "ingress_class" {
   description = "The ingress class this controller will satisfy. If not specified, controller will match all ingresses without ingress class annotation and ingresses of type alb"
   type        = string

@@ -42,6 +42,7 @@ locals {
     enable_cert_manager = var.enable_cert_manager
 
     cluster_name                                 = var.cluster_name
+    cluster_tag_check                            = var.cluster_tag_check
     ingress_class                                = var.ingress_class
     region                                       = var.region
     vpc_id                                       = var.vpc_id
